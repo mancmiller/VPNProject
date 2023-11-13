@@ -60,10 +60,10 @@
 		0477F9E02B023D2000BAF5C4 /* VPNProject */ = {
 			isa = PBXGroup;
 			children = (
-				0477FA0B2B027B7000BAF5C4 /* Info.plist */,
 				0477F9E12B023D2000BAF5C4 /* VPNProjectApp.swift */,
 				0477F9E32B023D2000BAF5C4 /* MenuView.swift */,
 				0477F9E52B023D2100BAF5C4 /* Assets.xcassets */,
+				0477FA0B2B027B7000BAF5C4 /* Info.plist */,
 				0477FA022B027B1700BAF5C4 /* Font */,
 				0477F9E72B023D2100BAF5C4 /* Preview Content */,
 			);

@@ -6,8 +6,8 @@
 	<array>
 		<string>Dubai-Medium.ttf</string>
 		<string>Dubai-Regular.ttf</string>
-		<string>Dubai-Light</string>
-		<string>Dubai-Bold</string>
+		<string>Dubai-Light.ttf</string>
+		<string>Dubai-Bold.ttf</string>
 	</array>
 </dict>
 </plist>
