@@ -30,18 +30,18 @@ struct MenuView: View {
                         .background(
                             Circle()
                                 .fill(
-                                    .shadow(.inner(color: .black .opacity(0.6),
+                                    .shadow(.inner(color: .black.opacity(0.6),
                                                    radius: 1, x: 4, y: 4))
                                 )
                                 .fill(
-                                    .shadow(.inner(color: .white .opacity(0.6),
+                                    .shadow(.inner(color: .white.opacity(0.6),
                                                    radius: 2, x: -1, y: -1))
                                 )
                         ).foregroundStyle(.black.opacity(0.4))
                 }
             }.padding(16)
             
-            // MARK: - Connection Button Section
+            // MARK: - TurnOnButton Section
             VStack {
                 Text( !isConnected ? "Protect your connection" : " ")
                     .font(.custom("Dubai-Medium", size: 16))
@@ -51,7 +51,7 @@ struct MenuView: View {
                     .font(.custom("Dubai-Medium", size: 18))
                     .foregroundStyle(.gray)
                 
-                // Indicators and Connection Button
+                // Indicators and TurnOnButton
                 HStack(spacing: 25){
                     // Indicator OFF
                     ZStack {
@@ -64,12 +64,13 @@ struct MenuView: View {
                             )
                             .foregroundStyle(.black.opacity(0.4))
                             .frame(width: 20, height: 20)
+                        
                         Circle()
                             .fill( !isConnected ? .red : Color("DarkAccentColor"))
                             .frame(width: 8, height: 8)
                     }
                     
-                    // Connection Button
+                    // TurnOnButton
                     Button {
                         //TODO action
                     } label: {
@@ -111,16 +112,15 @@ struct MenuView: View {
                     }
                 }
             }
-            // View around button and indicators
-            .frame(maxWidth: .infinity)
+            // View around TurnOnButton and Indicators
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(
-                Color(.black)
-                    .opacity(0.3)
+                Color(.black.opacity(0.3))
                     .cornerRadius(24)
-                    .padding(.vertical, -16)
             )
+            // TurnOnButton and Indicators HStack paddings
             .padding(.horizontal, 16)
-            
+            .padding(.bottom, 16)
             
             // MARK: - Location and Shorctut Buttons
             HStack {
@@ -151,17 +151,16 @@ struct MenuView: View {
                             .background(
                                 Circle()
                                     .fill(.black.opacity(0.2))
-                                    .frame(width: 28, height: 28)
+                                    .frame(width: 24, height: 24)
                             )
                     }
-                    // Location Button padding
+                    // Location Button paddings
                     .padding(.leading, 12)
                     .padding(.trailing, 24)
                     .padding(.vertical, 18)
                     .background(
-                        Color(UIColor.black)
+                        Color(.black.opacity(0.3))
                             .cornerRadius(24)
-                            .opacity(0.3)
                     )
                 }
                 
@@ -170,6 +169,7 @@ struct MenuView: View {
                     autoMode.toggle()
                 } label: {
                     HStack {
+                        // Indicator
                         ZStack {
                             Circle()
                                 .fill(.shadow(.inner(color: .black.opacity(0.2),
@@ -181,7 +181,7 @@ struct MenuView: View {
                                 .foregroundStyle(.black.opacity(0.4))
                                 .frame(width: 20, height: 20)
                             Circle()
-                                .fill( autoMode ? .orange : Color("DarkAccentColor"))
+                                .fill( autoMode ? Color("OrangePremium") : Color("DarkAccentColor"))
                                 .frame(width: 8, height: 8)
                         }
                         
@@ -194,23 +194,152 @@ struct MenuView: View {
                                 .foregroundStyle(.white)
                         }
                     }
-                    // Shortcut Button padding
+                    // Shortcut Button paddings
                     .padding(.vertical, 18)
                     .padding(.horizontal, 12)
                     .background(
-                        Color(UIColor.black)
+                        Color(.black)
                             .cornerRadius(24)
                             .opacity(0.3)
                     )
                     .overlay(
                         autoMode ? RoundedRectangle(cornerRadius: 24)
-                            .stroke(Color.orange) : nil
+                            .stroke(Color("OrangePremium")) : nil
                     )
                 }
             }
-            // Location and Shortcut Button paddings
+            // Location and Shortcut Button HStack paddings
             .padding(.horizontal, 16)
-            .padding(.vertical, 32)
+            .padding(.vertical, 16)
+            
+            // GetPremiumButton
+            Button {
+                // TODO action
+            } label: {
+                HStack {
+                    Image("Coupon")
+                        .frame(width: 42, height: 42)
+                        
+                    VStack(alignment: .leading) {
+                        Text("Get Premium")
+                            .font(.custom("Dubai-Medium", size: 20))
+                            .foregroundStyle(.white)
+                        Text("• secure your data while surfing")
+                            .font(.custom("Dubai-Light", size: 14))
+                            .foregroundStyle(.white)
+                        Text("• change the country without leaving home")
+                            .font(.custom("Dubai-Light", size: 14))
+                            .foregroundStyle(.white)
+                            
+                    }
+                    .padding(.leading, 12)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.forward")
+                        .font(.system(size: 12, weight: .black))
+                        .foregroundStyle(.white)
+                        .background(
+                            Circle()
+                                .fill(.white.opacity(0.2))
+                                .frame(width: 24, height: 24)
+                        )
+                }
+                // GetPremiumButton inside padding
+                .padding(.leading, 12)
+                .padding(.trailing, 24)
+                .padding(.vertical, 4)
+                .background(
+                    Color(Color("OrangePremium"))
+                        .cornerRadius(24)
+                )
+            }
+            // GetPremiumButton HStack padding
+            .padding(.horizontal, 16)
+            .padding(.top, 16)
+            .padding(.bottom, 8)
+            
+            // SpeedTestButton
+            Button {
+                // TODO action
+            } label: {
+                HStack {
+                    Image("Rocket")
+                        .frame(width: 42, height: 42)
+                        
+                    VStack(alignment: .leading) {
+                        Text("Speed Test")
+                            .font(.custom("Dubai-Regular", size: 16))
+                            .foregroundStyle(.white)
+                        Text("Check your internet connection speed")
+                            .font(.custom("Dubai-Light", size: 14))
+                            .foregroundStyle(.white.opacity(0.7))
+                    }
+                    .padding(.leading, 8)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.forward")
+                        .font(.system(size: 12, weight: .black))
+                        .foregroundStyle(.white)
+                        .background(
+                            Circle()
+                                .fill(.black.opacity(0.2))
+                                .frame(width: 24, height: 24)
+                        )
+                }
+                // SpeedTestButton inside padding
+                .padding(.leading, 8)
+                .padding(.trailing, 24)
+                .padding(.vertical, 18)
+                .background(
+                    Color(.black.opacity(0.3))
+                        .cornerRadius(24)
+                )
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            
+            // ConnectionButton
+            Button {
+                // TODO action
+            } label: {
+                HStack {
+                    Image("Info")
+                        .frame(width: 42, height: 42)
+                        
+                    VStack(alignment: .leading) {
+                        Text("Connection")
+                            .font(.custom("Dubai-Regular", size: 16))
+                            .foregroundStyle(.white)
+                        Text("Get information about your connection")
+                            .font(.custom("Dubai-Light", size: 14))
+                            .foregroundStyle(.white.opacity(0.7))
+                    }
+                    .padding(.leading, 8)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.forward")
+                        .font(.system(size: 12, weight: .black))
+                        .foregroundStyle(.white)
+                        .background(
+                            Circle()
+                                .fill(.black.opacity(0.2))
+                                .frame(width: 24, height: 24)
+                        )
+                }
+                // SpeedTestButton inside padding
+                .padding(.leading, 8)
+                .padding(.trailing, 24)
+                .padding(.vertical, 18)
+                .background(
+                    Color(.black.opacity(0.3))
+                        .cornerRadius(24)
+                )
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         
