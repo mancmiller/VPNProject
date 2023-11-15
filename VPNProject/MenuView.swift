@@ -12,6 +12,9 @@ struct MenuView: View {
     @State var isConnected = false
     @State var autoMode = false
     
+    private let backgroundBlack = Color(.black.opacity(0.3))
+    private let padding = CGFloat(16)
+    
     var body: some View {
         
         VStack {
@@ -39,7 +42,7 @@ struct MenuView: View {
                                 )
                         ).foregroundStyle(.black.opacity(0.4))
                 }
-            }.padding(16)
+            }.padding(padding)
             
             // MARK: - TurnOnButton Section
             VStack {
@@ -55,16 +58,7 @@ struct MenuView: View {
                 HStack(spacing: 25){
                     // Indicator OFF
                     ZStack {
-                        Circle()
-                            .fill(.shadow(.inner(color: .black.opacity(0.2),
-                                                 radius: 4, x: 4, y: 4))
-                            )
-                            .fill(.shadow(.inner(color: Color("AccentColor"),
-                                                 radius: 4, x: -1, y: -1))
-                            )
-                            .foregroundStyle(.black.opacity(0.4))
-                            .frame(width: 20, height: 20)
-                        
+                        IndicatorOuterCircle()
                         Circle()
                             .fill( !isConnected ? .red : Color("DarkAccentColor"))
                             .frame(width: 8, height: 8)
@@ -97,15 +91,7 @@ struct MenuView: View {
                     
                     // Indicator ON
                     ZStack {
-                        Circle()
-                            .fill(.shadow(.inner(color: .black.opacity(0.2),
-                                                 radius: 4, x: 4, y: 4))
-                            )
-                            .fill(.shadow(.inner(color: Color("AccentColor"),
-                                                 radius: 4, x: -1, y: -1))
-                            )
-                            .foregroundStyle(.black.opacity(0.4))
-                            .frame(width: 20, height: 20)
+                        IndicatorOuterCircle()
                         Circle()
                             .fill( isConnected ? .green : Color("DarkAccentColor"))
                             .frame(width: 8, height: 8)
@@ -115,12 +101,12 @@ struct MenuView: View {
             // View around TurnOnButton and Indicators
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(
-                Color(.black.opacity(0.3))
+                backgroundBlack
                     .cornerRadius(24)
             )
             // TurnOnButton and Indicators HStack paddings
-            .padding(.horizontal, 16)
-            .padding(.bottom, 16)
+            .padding(.horizontal, padding)
+            .padding(.bottom, padding)
             
             // MARK: - Location and Shorctut Buttons
             HStack {
@@ -145,21 +131,14 @@ struct MenuView: View {
                         
                         Spacer()
                         
-                        Image(systemName: "chevron.forward")
-                            .font(.system(size: 12, weight: .black))
-                            .foregroundStyle(.white)
-                            .background(
-                                Circle()
-                                    .fill(.black.opacity(0.2))
-                                    .frame(width: 24, height: 24)
-                            )
+                        ChevronView(color: .black)
                     }
                     // Location Button paddings
                     .padding(.leading, 12)
                     .padding(.trailing, 24)
                     .padding(.vertical, 18)
                     .background(
-                        Color(.black.opacity(0.3))
+                        backgroundBlack
                             .cornerRadius(24)
                     )
                 }
@@ -171,15 +150,7 @@ struct MenuView: View {
                     HStack {
                         // Indicator
                         ZStack {
-                            Circle()
-                                .fill(.shadow(.inner(color: .black.opacity(0.2),
-                                                     radius: 4, x: 4, y: 4))
-                                )
-                                .fill(.shadow(.inner(color: Color("AccentColor"),
-                                                     radius: 4, x: -1, y: -1))
-                                )
-                                .foregroundStyle(.black.opacity(0.4))
-                                .frame(width: 20, height: 20)
+                            IndicatorOuterCircle()
                             Circle()
                                 .fill( autoMode ? Color("OrangePremium") : Color("DarkAccentColor"))
                                 .frame(width: 8, height: 8)
@@ -198,9 +169,8 @@ struct MenuView: View {
                     .padding(.vertical, 18)
                     .padding(.horizontal, 12)
                     .background(
-                        Color(.black)
+                        backgroundBlack
                             .cornerRadius(24)
-                            .opacity(0.3)
                     )
                     .overlay(
                         autoMode ? RoundedRectangle(cornerRadius: 24)
@@ -209,8 +179,8 @@ struct MenuView: View {
                 }
             }
             // Location and Shortcut Button HStack paddings
-            .padding(.horizontal, 16)
-            .padding(.vertical, 16)
+            .padding(.horizontal, padding)
+            .padding(.vertical, padding)
             
             // GetPremiumButton
             Button {
@@ -236,14 +206,7 @@ struct MenuView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "chevron.forward")
-                        .font(.system(size: 12, weight: .black))
-                        .foregroundStyle(.white)
-                        .background(
-                            Circle()
-                                .fill(.white.opacity(0.2))
-                                .frame(width: 24, height: 24)
-                        )
+                    ChevronView(color: .white)
                 }
                 // GetPremiumButton inside padding
                 .padding(.leading, 12)
@@ -255,9 +218,9 @@ struct MenuView: View {
                 )
             }
             // GetPremiumButton HStack padding
-            .padding(.horizontal, 16)
-            .padding(.top, 16)
-            .padding(.bottom, 8)
+            .padding(.horizontal, padding)
+            .padding(.top, padding)
+            .padding(.bottom, padding / 2)
             
             // SpeedTestButton
             Button {
@@ -279,26 +242,19 @@ struct MenuView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "chevron.forward")
-                        .font(.system(size: 12, weight: .black))
-                        .foregroundStyle(.white)
-                        .background(
-                            Circle()
-                                .fill(.black.opacity(0.2))
-                                .frame(width: 24, height: 24)
-                        )
+                    ChevronView(color: .black)
                 }
                 // SpeedTestButton inside padding
                 .padding(.leading, 8)
                 .padding(.trailing, 24)
                 .padding(.vertical, 18)
                 .background(
-                    Color(.black.opacity(0.3))
+                    backgroundBlack
                         .cornerRadius(24)
                 )
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.horizontal, padding)
+            .padding(.vertical, padding / 2)
             
             // ConnectionButton
             Button {
@@ -320,26 +276,19 @@ struct MenuView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "chevron.forward")
-                        .font(.system(size: 12, weight: .black))
-                        .foregroundStyle(.white)
-                        .background(
-                            Circle()
-                                .fill(.black.opacity(0.2))
-                                .frame(width: 24, height: 24)
-                        )
+                    ChevronView(color: .black)
                 }
                 // SpeedTestButton inside padding
                 .padding(.leading, 8)
                 .padding(.trailing, 24)
                 .padding(.vertical, 18)
-                .background(
-                    Color(.black.opacity(0.3))
-                        .cornerRadius(24)
-                )
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .background(
+                backgroundBlack
+                    .cornerRadius(24)
+            )
+            .padding(.horizontal, padding)
+            .padding(.vertical, padding / 2)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         
@@ -368,4 +317,34 @@ struct MenuView: View {
 
 #Preview {
     MenuView()
+}
+
+struct IndicatorOuterCircle: View {
+    var body: some View {
+        Circle()
+            .fill(.shadow(.inner(color: .black.opacity(0.2),
+                                 radius: 4, x: 4, y: 4))
+            )
+            .fill(.shadow(.inner(color: Color("AccentColor"),
+                                 radius: 4, x: -1, y: -1))
+            )
+            .foregroundStyle(.black.opacity(0.4))
+            .frame(width: 20, height: 20)
+    }
+}
+
+struct ChevronView: View {
+    
+    fileprivate let color: Color
+    
+    var body: some View {
+        Image(systemName: "chevron.forward")
+            .font(.system(size: 12, weight: .black))
+            .foregroundStyle(.white)
+            .background(
+                Circle()
+                    .fill(color.opacity(0.2))
+                    .frame(width: 24, height: 24)
+            )
+    }
 }
