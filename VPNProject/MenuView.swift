@@ -11,6 +11,8 @@ struct MenuView: View {
     
     @State var isConnected = false
     @State var autoMode = false
+    @State var showServerList = false
+    @EnvironmentObject var serverListViewModel: ServerListViewModel
     
     private let backgroundBlack = Color(.black.opacity(0.3))
     private let padding = CGFloat(16)
@@ -102,7 +104,7 @@ struct MenuView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(
                 backgroundBlack
-                    .cornerRadius(24)
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
             )
             // TurnOnButton and Indicators HStack paddings
             .padding(.horizontal, padding)
@@ -112,7 +114,7 @@ struct MenuView: View {
             HStack {
                 // Location Button
                 Button {
-                    // TODO action
+                    showServerList.toggle()
                 } label: {
                     HStack {
                         Image("Germany")
@@ -133,13 +135,19 @@ struct MenuView: View {
                         
                         ChevronView(color: .black)
                     }
+                    .sheet(isPresented: $showServerList, content: {
+                        ServerListView()
+                            .presentationDetents([.medium])
+                            .presentationDragIndicator(.visible)
+                    })
+                    
                     // Location Button paddings
                     .padding(.leading, 12)
                     .padding(.trailing, 24)
                     .padding(.vertical, 18)
                     .background(
                         backgroundBlack
-                            .cornerRadius(24)
+                            .clipShape(RoundedRectangle(cornerRadius: 24))
                     )
                 }
                 
@@ -170,7 +178,7 @@ struct MenuView: View {
                     .padding(.horizontal, 12)
                     .background(
                         backgroundBlack
-                            .cornerRadius(24)
+                            .clipShape(RoundedRectangle(cornerRadius: 24))
                     )
                     .overlay(
                         autoMode ? RoundedRectangle(cornerRadius: 24)
@@ -214,8 +222,8 @@ struct MenuView: View {
                 .padding(.vertical, 4)
                 .background(
                     Color(Color("OrangePremium"))
-                        .cornerRadius(24)
                 )
+                .clipShape(RoundedRectangle(cornerRadius: 24))
             }
             // GetPremiumButton HStack padding
             .padding(.horizontal, padding)
@@ -250,8 +258,8 @@ struct MenuView: View {
                 .padding(.vertical, 18)
                 .background(
                     backgroundBlack
-                        .cornerRadius(24)
                 )
+                .clipShape(RoundedRectangle(cornerRadius: 24))
             }
             .padding(.horizontal, padding)
             .padding(.vertical, padding / 2)
@@ -285,8 +293,8 @@ struct MenuView: View {
             }
             .background(
                 backgroundBlack
-                    .cornerRadius(24)
             )
+            .clipShape(RoundedRectangle(cornerRadius: 24))
             .padding(.horizontal, padding)
             .padding(.vertical, padding / 2)
         }
@@ -317,6 +325,7 @@ struct MenuView: View {
 
 #Preview {
     MenuView()
+        .environmentObject(ServerListViewModel())
 }
 
 struct IndicatorOuterCircle: View {

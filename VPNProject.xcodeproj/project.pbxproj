@@ -15,6 +15,9 @@
 		0477FA082B027B1800BAF5C4 /* Dubai-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0477FA042B027B1800BAF5C4 /* Dubai-Regular.ttf */; };
 		0477FA092B027B1800BAF5C4 /* Dubai-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0477FA052B027B1800BAF5C4 /* Dubai-Light.ttf */; };
 		0477FA0A2B027B1800BAF5C4 /* Dubai-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0477FA062B027B1800BAF5C4 /* Dubai-Bold.ttf */; };
+		047F77E62B0757DF0090BEE0 /* ServerListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047F77E52B0757DF0090BEE0 /* ServerListViewModel.swift */; };
+		04D70C1B2B061E7500C8DC9D /* ServerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D70C1A2B061E7500C8DC9D /* ServerListView.swift */; };
+		04D70C1E2B06202D00C8DC9D /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D70C1D2B06202D00C8DC9D /* Server.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		0477FA052B027B1800BAF5C4 /* Dubai-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dubai-Light.ttf"; sourceTree = "<group>"; };
 		0477FA062B027B1800BAF5C4 /* Dubai-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dubai-Bold.ttf"; sourceTree = "<group>"; };
 		0477FA0B2B027B7000BAF5C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		047F77E52B0757DF0090BEE0 /* ServerListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerListViewModel.swift; sourceTree = "<group>"; };
+		04D70C1A2B061E7500C8DC9D /* ServerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerListView.swift; sourceTree = "<group>"; };
+		04D70C1D2B06202D00C8DC9D /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +66,11 @@
 		0477F9E02B023D2000BAF5C4 /* VPNProject */ = {
 			isa = PBXGroup;
 			children = (
+				047F77E52B0757DF0090BEE0 /* ServerListViewModel.swift */,
+				04D70C1C2B06201500C8DC9D /* Model */,
 				0477F9E12B023D2000BAF5C4 /* VPNProjectApp.swift */,
 				0477F9E32B023D2000BAF5C4 /* MenuView.swift */,
+				04D70C1A2B061E7500C8DC9D /* ServerListView.swift */,
 				0477F9E52B023D2100BAF5C4 /* Assets.xcassets */,
 				0477FA0B2B027B7000BAF5C4 /* Info.plist */,
 				0477FA022B027B1700BAF5C4 /* Font */,
@@ -87,6 +96,14 @@
 				0477FA062B027B1800BAF5C4 /* Dubai-Bold.ttf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		04D70C1C2B06201500C8DC9D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				04D70C1D2B06202D00C8DC9D /* Server.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,6 +182,9 @@
 			files = (
 				0477F9E42B023D2000BAF5C4 /* MenuView.swift in Sources */,
 				0477F9E22B023D2000BAF5C4 /* VPNProjectApp.swift in Sources */,
+				047F77E62B0757DF0090BEE0 /* ServerListViewModel.swift in Sources */,
+				04D70C1E2B06202D00C8DC9D /* Server.swift in Sources */,
+				04D70C1B2B061E7500C8DC9D /* ServerListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
