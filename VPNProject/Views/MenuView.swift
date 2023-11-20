@@ -12,7 +12,11 @@ struct MenuView: View {
     @State var isConnected = false
     @State var autoMode = false
     @State var showServerList = false
+    @State var isPremium = false
+    @State var showPremiumPurchase = false
+    
     @EnvironmentObject var serverListViewModel: ServerListViewModel
+    
     
     private let backgroundBlack = Color(.black.opacity(0.3))
     private let padding = CGFloat(16)
@@ -101,7 +105,7 @@ struct MenuView: View {
                 }
             }
             // View around TurnOnButton and Indicators
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: 200)
             .background(
                 backgroundBlack
                     .clipShape(RoundedRectangle(cornerRadius: 24))
@@ -133,7 +137,7 @@ struct MenuView: View {
                         
                         Spacer()
                         
-                        ChevronView(color: .black)
+                        ChevronView(color: .black, forwardOrBackward: "forward")
                     }
                     .sheet(isPresented: $showServerList, content: {
                         ServerListView()
@@ -190,45 +194,51 @@ struct MenuView: View {
             .padding(.horizontal, padding)
             .padding(.vertical, padding)
             
-            // GetPremiumButton
-            Button {
-                // TODO action
-            } label: {
-                HStack {
-                    Image("Coupon")
-                        .frame(width: 42, height: 42)
+            // MARK: - GetPremiumButton
+            if !isPremium {
+                Button {
+                    showPremiumPurchase.toggle()
+                } label: {
+                    HStack {
+                        Image("Coupon")
+                            .frame(width: 42, height: 42)
                         
-                    VStack(alignment: .leading) {
-                        Text("Get Premium")
-                            .font(.custom("Dubai-Medium", size: 20))
-                            .foregroundStyle(.white)
-                        Text("• secure your data while surfing")
-                            .font(.custom("Dubai-Light", size: 14))
-                            .foregroundStyle(.white)
-                        Text("• change the country without leaving home")
-                            .font(.custom("Dubai-Light", size: 14))
-                            .foregroundStyle(.white)
+                        VStack(alignment: .leading, spacing: -2) {
+                            Text("Get Premium")
+                                .font(.custom("Dubai-Medium", size: 20))
+                                .foregroundStyle(.white)
+                            Text("• secure your data while surfing")
+                                .font(.custom("Dubai-Light", size: 14))
+                                .foregroundStyle(.white)
+                            Text("• change the country without leaving home")
+                                .font(.custom("Dubai-Light", size: 14))
+                                .foregroundStyle(.white)
                             
+                        }
+                        .padding(.leading, 12)
+                        
+                        Spacer()
+                        
+                        ChevronView(color: .white, forwardOrBackward: "forward")
                     }
+                    // GetPremiumButton inside padding
                     .padding(.leading, 12)
-                    
-                    Spacer()
-                    
-                    ChevronView(color: .white)
+                    .padding(.trailing, 24)
+                    .padding(.vertical, 4)
+                    .background(
+                        Color(Color("OrangePremium"))
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
                 }
-                // GetPremiumButton inside padding
-                .padding(.leading, 12)
-                .padding(.trailing, 24)
-                .padding(.vertical, 4)
-                .background(
-                    Color(Color("OrangePremium"))
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 24))
+                .fullScreenCover(isPresented: $showPremiumPurchase, content: {
+                    PremiumPurchaseView()
+                })
+                
+                // GetPremiumButton HStack padding
+                .padding(.horizontal, padding)
+                .padding(.top, padding)
+                .padding(.bottom, padding / 2)
             }
-            // GetPremiumButton HStack padding
-            .padding(.horizontal, padding)
-            .padding(.top, padding)
-            .padding(.bottom, padding / 2)
             
             // SpeedTestButton
             Button {
@@ -250,7 +260,7 @@ struct MenuView: View {
                     
                     Spacer()
                     
-                    ChevronView(color: .black)
+                    ChevronView(color: .black, forwardOrBackward: "forward")
                 }
                 // SpeedTestButton inside padding
                 .padding(.leading, 8)
@@ -284,7 +294,7 @@ struct MenuView: View {
                     
                     Spacer()
                     
-                    ChevronView(color: .black)
+                    ChevronView(color: .black, forwardOrBackward: "forward")
                 }
                 // SpeedTestButton inside padding
                 .padding(.leading, 8)
@@ -344,10 +354,11 @@ struct IndicatorOuterCircle: View {
 
 struct ChevronView: View {
     
-    fileprivate let color: Color
+    let color: Color
+    let forwardOrBackward: String
     
     var body: some View {
-        Image(systemName: "chevron.forward")
+        Image(systemName: "chevron.\(forwardOrBackward)")
             .font(.system(size: 12, weight: .black))
             .foregroundStyle(.white)
             .background(
