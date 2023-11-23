@@ -212,6 +212,7 @@ struct MenuView: View {
                                 .foregroundStyle(.white)
                             Text("• change the country without leaving home")
                                 .font(.custom("Dubai-Light", size: 14))
+                                .lineLimit(1)
                                 .foregroundStyle(.white)
                             
                         }
