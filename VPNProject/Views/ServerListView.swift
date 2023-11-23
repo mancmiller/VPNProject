@@ -84,7 +84,6 @@ struct ServerListView: View {
                             
                             .font(.custom("Dubai-Regular", size: 14))
                             .foregroundStyle(.white)
-                            .listRowBackground(Color.clear)
                         Spacer()
                     })
                 }

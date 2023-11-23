@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0449E0CE2B0F47D900784CDD /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0449E0CD2B0F47D900784CDD /* MenuView.swift */; };
 		0477F9E22B023D2000BAF5C4 /* VPNProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477F9E12B023D2000BAF5C4 /* VPNProjectApp.swift */; };
-		0477F9E42B023D2000BAF5C4 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477F9E32B023D2000BAF5C4 /* MenuView.swift */; };
+		0477F9E42B023D2000BAF5C4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477F9E32B023D2000BAF5C4 /* MainView.swift */; };
 		0477F9E62B023D2100BAF5C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0477F9E52B023D2100BAF5C4 /* Assets.xcassets */; };
 		0477F9E92B023D2100BAF5C4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0477F9E82B023D2100BAF5C4 /* Preview Assets.xcassets */; };
 		0477FA072B027B1800BAF5C4 /* Dubai-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0477FA032B027B1800BAF5C4 /* Dubai-Medium.ttf */; };
@@ -22,9 +23,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0449E0CD2B0F47D900784CDD /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		0477F9DE2B023D2000BAF5C4 /* VPNProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPNProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0477F9E12B023D2000BAF5C4 /* VPNProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNProjectApp.swift; sourceTree = "<group>"; };
-		0477F9E32B023D2000BAF5C4 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		0477F9E32B023D2000BAF5C4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		0477F9E52B023D2100BAF5C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0477F9E82B023D2100BAF5C4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0477FA032B027B1800BAF5C4 /* Dubai-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dubai-Medium.ttf"; sourceTree = "<group>"; };
@@ -118,9 +120,10 @@
 		04F987332B0B3E5A00D5B2CB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0477F9E32B023D2000BAF5C4 /* MenuView.swift */,
+				0477F9E32B023D2000BAF5C4 /* MainView.swift */,
 				04D70C1A2B061E7500C8DC9D /* ServerListView.swift */,
 				04F987342B0B3E8800D5B2CB /* PremiumPurchaseView.swift */,
+				0449E0CD2B0F47D900784CDD /* MenuView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -199,7 +202,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0477F9E42B023D2000BAF5C4 /* MenuView.swift in Sources */,
+				0449E0CE2B0F47D900784CDD /* MenuView.swift in Sources */,
+				0477F9E42B023D2000BAF5C4 /* MainView.swift in Sources */,
 				04F987352B0B3E8800D5B2CB /* PremiumPurchaseView.swift in Sources */,
 				0477F9E22B023D2000BAF5C4 /* VPNProjectApp.swift in Sources */,
 				047F77E62B0757DF0090BEE0 /* ServerListViewModel.swift in Sources */,

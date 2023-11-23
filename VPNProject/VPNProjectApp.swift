@@ -14,7 +14,7 @@ struct VPNProjectApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MenuView()
+            MainView()
         }
         .environmentObject(serverListViewModel)
     }
