@@ -1,5 +1,5 @@
 //
-//  MenuView.swift
+//  MainView.swift
 //  VPNProject
 //
 //  Created by Muslim on 13.11.2023.
@@ -7,10 +7,20 @@
 
 import SwiftUI
 
-struct MenuView: View {
+struct MainView: View {
     
     @State var isConnected = false
     @State var autoMode = false
+    @State var showServerList = false
+    @State var isPremium = false
+    @State var showPremiumPurchase = false
+    @State var openMenu = false
+    
+    @EnvironmentObject var serverListViewModel: ServerListViewModel
+    
+    
+    private let backgroundBlack = Color(.black.opacity(0.3))
+    private let padding = CGFloat(16)
     
     var body: some View {
         
@@ -22,7 +32,7 @@ struct MenuView: View {
                 Spacer()
                 
                 Button {
-                    // TODO action
+                    openMenu.toggle()
                 } label: {
                     Image("MenuButton")
                         .resizable()
@@ -39,7 +49,12 @@ struct MenuView: View {
                                 )
                         ).foregroundStyle(.black.opacity(0.4))
                 }
-            }.padding(16)
+                .sheet(isPresented: $openMenu, content: {
+                    MenuView()
+                        .presentationDetents([.medium])
+                        .presentationDragIndicator(.visible)
+                })
+            }.padding(padding)
             
             // MARK: - TurnOnButton Section
             VStack {
@@ -55,16 +70,7 @@ struct MenuView: View {
                 HStack(spacing: 25){
                     // Indicator OFF
                     ZStack {
-                        Circle()
-                            .fill(.shadow(.inner(color: .black.opacity(0.2),
-                                                 radius: 4, x: 4, y: 4))
-                            )
-                            .fill(.shadow(.inner(color: Color("AccentColor"),
-                                                 radius: 4, x: -1, y: -1))
-                            )
-                            .foregroundStyle(.black.opacity(0.4))
-                            .frame(width: 20, height: 20)
-                        
+                        IndicatorOuterCircle()
                         Circle()
                             .fill( !isConnected ? .red : Color("DarkAccentColor"))
                             .frame(width: 8, height: 8)
@@ -97,15 +103,7 @@ struct MenuView: View {
                     
                     // Indicator ON
                     ZStack {
-                        Circle()
-                            .fill(.shadow(.inner(color: .black.opacity(0.2),
-                                                 radius: 4, x: 4, y: 4))
-                            )
-                            .fill(.shadow(.inner(color: Color("AccentColor"),
-                                                 radius: 4, x: -1, y: -1))
-                            )
-                            .foregroundStyle(.black.opacity(0.4))
-                            .frame(width: 20, height: 20)
+                        IndicatorOuterCircle()
                         Circle()
                             .fill( isConnected ? .green : Color("DarkAccentColor"))
                             .frame(width: 8, height: 8)
@@ -113,20 +111,20 @@ struct MenuView: View {
                 }
             }
             // View around TurnOnButton and Indicators
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: 200)
             .background(
-                Color(.black.opacity(0.3))
-                    .cornerRadius(24)
+                backgroundBlack
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
             )
             // TurnOnButton and Indicators HStack paddings
-            .padding(.horizontal, 16)
-            .padding(.bottom, 16)
+            .padding(.horizontal, padding)
+            .padding(.bottom, padding)
             
             // MARK: - Location and Shorctut Buttons
             HStack {
                 // Location Button
                 Button {
-                    // TODO action
+                    showServerList.toggle()
                 } label: {
                     HStack {
                         Image("Germany")
@@ -145,22 +143,21 @@ struct MenuView: View {
                         
                         Spacer()
                         
-                        Image(systemName: "chevron.forward")
-                            .font(.system(size: 12, weight: .black))
-                            .foregroundStyle(.white)
-                            .background(
-                                Circle()
-                                    .fill(.black.opacity(0.2))
-                                    .frame(width: 24, height: 24)
-                            )
+                        ChevronView(color: .black, forwardOrBackward: "forward")
                     }
+                    .sheet(isPresented: $showServerList, content: {
+                        ServerListView()
+                            .presentationDetents([.medium])
+                            .presentationDragIndicator(.visible)
+                    })
+                    
                     // Location Button paddings
                     .padding(.leading, 12)
                     .padding(.trailing, 24)
                     .padding(.vertical, 18)
                     .background(
-                        Color(.black.opacity(0.3))
-                            .cornerRadius(24)
+                        backgroundBlack
+                            .clipShape(RoundedRectangle(cornerRadius: 24))
                     )
                 }
                 
@@ -171,15 +168,7 @@ struct MenuView: View {
                     HStack {
                         // Indicator
                         ZStack {
-                            Circle()
-                                .fill(.shadow(.inner(color: .black.opacity(0.2),
-                                                     radius: 4, x: 4, y: 4))
-                                )
-                                .fill(.shadow(.inner(color: Color("AccentColor"),
-                                                     radius: 4, x: -1, y: -1))
-                                )
-                                .foregroundStyle(.black.opacity(0.4))
-                                .frame(width: 20, height: 20)
+                            IndicatorOuterCircle()
                             Circle()
                                 .fill( autoMode ? Color("OrangePremium") : Color("DarkAccentColor"))
                                 .frame(width: 8, height: 8)
@@ -198,9 +187,8 @@ struct MenuView: View {
                     .padding(.vertical, 18)
                     .padding(.horizontal, 12)
                     .background(
-                        Color(.black)
-                            .cornerRadius(24)
-                            .opacity(0.3)
+                        backgroundBlack
+                            .clipShape(RoundedRectangle(cornerRadius: 24))
                     )
                     .overlay(
                         autoMode ? RoundedRectangle(cornerRadius: 24)
@@ -209,57 +197,57 @@ struct MenuView: View {
                 }
             }
             // Location and Shortcut Button HStack paddings
-            .padding(.horizontal, 16)
-            .padding(.vertical, 16)
+            .padding(.horizontal, padding)
+            .padding(.vertical, padding)
             
-            // GetPremiumButton
-            Button {
-                // TODO action
-            } label: {
-                HStack {
-                    Image("Coupon")
-                        .frame(width: 42, height: 42)
+            // MARK: - GetPremiumButton
+            if !isPremium {
+                Button {
+                    showPremiumPurchase.toggle()
+                } label: {
+                    HStack {
+                        Image("Coupon")
+                            .frame(width: 42, height: 42)
                         
-                    VStack(alignment: .leading) {
-                        Text("Get Premium")
-                            .font(.custom("Dubai-Medium", size: 20))
-                            .foregroundStyle(.white)
-                        Text("• secure your data while surfing")
-                            .font(.custom("Dubai-Light", size: 14))
-                            .foregroundStyle(.white)
-                        Text("• change the country without leaving home")
-                            .font(.custom("Dubai-Light", size: 14))
-                            .foregroundStyle(.white)
+                        VStack(alignment: .leading, spacing: -2) {
+                            Text("Get Premium")
+                                .font(.custom("Dubai-Medium", size: 20))
+                                .foregroundStyle(.white)
+                            Text("• secure your data while surfing")
+                                .font(.custom("Dubai-Light", size: 14))
+                                .foregroundStyle(.white)
+                            Text("• change the country without leaving home")
+                                .font(.custom("Dubai-Light", size: 14))
+                                .lineLimit(1)
+                                .foregroundStyle(.white)
                             
+                        }
+                        .padding(.leading, 12)
+                        
+                        Spacer()
+                        
+                        ChevronView(color: .white, forwardOrBackward: "forward")
                     }
+                    // GetPremiumButton inside padding
                     .padding(.leading, 12)
-                    
-                    Spacer()
-                    
-                    Image(systemName: "chevron.forward")
-                        .font(.system(size: 12, weight: .black))
-                        .foregroundStyle(.white)
-                        .background(
-                            Circle()
-                                .fill(.white.opacity(0.2))
-                                .frame(width: 24, height: 24)
-                        )
+                    .padding(.trailing, 24)
+                    .padding(.vertical, 4)
+                    .background(
+                        Color(Color("OrangePremium"))
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
                 }
-                // GetPremiumButton inside padding
-                .padding(.leading, 12)
-                .padding(.trailing, 24)
-                .padding(.vertical, 4)
-                .background(
-                    Color(Color("OrangePremium"))
-                        .cornerRadius(24)
-                )
+                .fullScreenCover(isPresented: $showPremiumPurchase, content: {
+                    PremiumPurchaseView()
+                })
+                
+                // GetPremiumButton HStack padding
+                .padding(.horizontal, padding)
+                .padding(.top, padding)
+                .padding(.bottom, padding / 2)
             }
-            // GetPremiumButton HStack padding
-            .padding(.horizontal, 16)
-            .padding(.top, 16)
-            .padding(.bottom, 8)
             
-            // SpeedTestButton
+            // MARK: - SpeedTestButton
             Button {
                 // TODO action
             } label: {
@@ -279,28 +267,21 @@ struct MenuView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "chevron.forward")
-                        .font(.system(size: 12, weight: .black))
-                        .foregroundStyle(.white)
-                        .background(
-                            Circle()
-                                .fill(.black.opacity(0.2))
-                                .frame(width: 24, height: 24)
-                        )
+                    ChevronView(color: .black, forwardOrBackward: "forward")
                 }
                 // SpeedTestButton inside padding
                 .padding(.leading, 8)
                 .padding(.trailing, 24)
                 .padding(.vertical, 18)
                 .background(
-                    Color(.black.opacity(0.3))
-                        .cornerRadius(24)
+                    backgroundBlack
                 )
+                .clipShape(RoundedRectangle(cornerRadius: 24))
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.horizontal, padding)
+            .padding(.vertical, padding / 2)
             
-            // ConnectionButton
+            // MARK: - ConnectionButton
             Button {
                 // TODO action
             } label: {
@@ -320,26 +301,19 @@ struct MenuView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "chevron.forward")
-                        .font(.system(size: 12, weight: .black))
-                        .foregroundStyle(.white)
-                        .background(
-                            Circle()
-                                .fill(.black.opacity(0.2))
-                                .frame(width: 24, height: 24)
-                        )
+                    ChevronView(color: .black, forwardOrBackward: "forward")
                 }
                 // SpeedTestButton inside padding
                 .padding(.leading, 8)
                 .padding(.trailing, 24)
                 .padding(.vertical, 18)
-                .background(
-                    Color(.black.opacity(0.3))
-                        .cornerRadius(24)
-                )
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .background(
+                backgroundBlack
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 24))
+            .padding(.horizontal, padding)
+            .padding(.vertical, padding / 2)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         
@@ -367,5 +341,37 @@ struct MenuView: View {
 }
 
 #Preview {
-    MenuView()
+    MainView()
+        .environmentObject(ServerListViewModel())
+}
+
+struct IndicatorOuterCircle: View {
+    var body: some View {
+        Circle()
+            .fill(.shadow(.inner(color: .black.opacity(0.2),
+                                 radius: 4, x: 4, y: 4))
+            )
+            .fill(.shadow(.inner(color: Color("AccentColor"),
+                                 radius: 4, x: -1, y: -1))
+            )
+            .foregroundStyle(.black.opacity(0.4))
+            .frame(width: 20, height: 20)
+    }
+}
+
+struct ChevronView: View {
+    
+    let color: Color
+    let forwardOrBackward: String
+    
+    var body: some View {
+        Image(systemName: "chevron.\(forwardOrBackward)")
+            .font(.system(size: 12, weight: .black))
+            .foregroundStyle(.white)
+            .background(
+                Circle()
+                    .fill(color.opacity(0.2))
+                    .frame(width: 24, height: 24)
+            )
+    }
 }

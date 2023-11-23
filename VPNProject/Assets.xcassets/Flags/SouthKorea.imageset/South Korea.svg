@@ -1,0 +1,22 @@
+<svg width="38" height="28" viewBox="0 0 38 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="38" height="28" fill="#F5F8FB"/>
+<ellipse cx="19" cy="14" rx="7.125" ry="7" fill="#DC251C"/>
+<mask id="mask0_0_10244" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="11" y="12" width="16" height="11">
+<path d="M26.125 22.1667V15.1667C23.7474 11.0789 18.9921 14.4429 18.9921 14.4429C18.9921 14.4429 14.2474 17.4949 11.875 12.8334V22.1667H26.125Z" fill="#C4C4C4"/>
+</mask>
+<g mask="url(#mask0_0_10244)">
+<ellipse cx="19" cy="14" rx="7.125" ry="7" fill="#41479B"/>
+</g>
+<path d="M5.13892 8.60925L8.70142 2.54707" stroke="black"/>
+<path d="M6.72571 9.50928L10.2882 3.4471" stroke="black"/>
+<path d="M8.3125 10.4094L11.875 4.34725" stroke="black"/>
+<path d="M32.8611 8.60925L29.2986 2.54707" stroke="black" stroke-dasharray="8 1"/>
+<path d="M31.2743 9.50928L27.7118 3.4471" stroke="black"/>
+<path d="M29.6875 10.4094L26.125 4.34725" stroke="black" stroke-dasharray="8 1"/>
+<path d="M5.13892 19.3907L8.70142 25.4529" stroke="black"/>
+<path d="M6.72571 18.4907L10.2882 24.5529" stroke="black" stroke-dasharray="8 1"/>
+<path d="M8.3125 17.5906L11.875 23.6528" stroke="black"/>
+<path d="M32.8611 19.3907L29.2986 25.4529" stroke="black" stroke-dasharray="8 1"/>
+<path d="M31.2743 18.4907L27.7118 24.5529" stroke="black" stroke-dasharray="8 1"/>
+<path d="M29.6875 17.5906L26.125 23.6528" stroke="black" stroke-dasharray="8 1"/>
+</svg>
