@@ -11,8 +11,7 @@ import SwiftUI
 struct MenuView: View {
     var body: some View {
         ZStack {
-            RadialGradient(colors: [.black.opacity(0.1), Color(#colorLiteral(red: 0.4039215686, green: 0.05098039216, blue: 0.8549019608, alpha: 0.4019039735)), Color(#colorLiteral(red: 0.4666666667, green: 0.137254902, blue: 0.9411764706, alpha: 0.4)),Color(#colorLiteral(red: 0.3450980392, green: 0.05098039216, blue: 0.7411764706, alpha: 0.4)),Color(#colorLiteral(red: 0.02352941176, green: 0.003921568627, blue: 0.1019607843, alpha: 0.4)), .black], center: .bottom, startRadius: 40, endRadius: 400).ignoresSafeArea().opacity(0.4)
-                .background(Color("SheetBackground"))
+            SheetBackground()
             List {
                 Section {
                     VStack {
@@ -30,17 +29,16 @@ struct MenuView: View {
                     SectionHeaderView(text: "Menu")
                 }
                 Section {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 0) {
                         SupportView(image: "Mail", text: "Restore Purchases")
                         SupportView(image: "Shield", text: "Privacy Policy")
                         SupportView(image: "Document", text: "Terms of Use")
                     }
                     .listRowBackground(Color.clear)
-                    .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    
                 } header: {
                     SectionHeaderView(text: "Support")
                 }
+                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
             }
             .scrollContentBackground(.hidden)
         }
