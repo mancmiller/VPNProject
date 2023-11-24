@@ -15,6 +15,8 @@ struct MainView: View {
     @State var isPremium = false
     @State var showPremiumPurchase = false
     @State var openMenu = false
+    @State var openConnectionInfo = false
+    @State var startSpeedTest = false
     
     @EnvironmentObject var serverListViewModel: ServerListViewModel
     
@@ -249,7 +251,7 @@ struct MainView: View {
             
             // MARK: - SpeedTestButton
             Button {
-                // TODO action
+                startSpeedTest.toggle()
             } label: {
                 HStack {
                     Image("Rocket")
@@ -278,12 +280,17 @@ struct MainView: View {
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 24))
             }
+            .sheet(isPresented: $startSpeedTest, content: {
+                SpeedTestView()
+                    .presentationDetents([.medium])
+                    .presentationDragIndicator(.visible)
+            })
             .padding(.horizontal, padding)
             .padding(.vertical, padding / 2)
             
-            // MARK: - ConnectionButton
+            // MARK: - ConnectionInfoButton
             Button {
-                // TODO action
+                openConnectionInfo.toggle()
             } label: {
                 HStack {
                     Image("Info")
@@ -303,11 +310,17 @@ struct MainView: View {
                     
                     ChevronView(color: .black, forwardOrBackward: "forward")
                 }
-                // SpeedTestButton inside padding
+                // ConnectionInfoButton inside padding
                 .padding(.leading, 8)
                 .padding(.trailing, 24)
                 .padding(.vertical, 18)
             }
+            .sheet(isPresented: $openConnectionInfo, content: {
+                ConnectionInfoView()
+                    .presentationDetents([.medium])
+                    .presentationDragIndicator(.visible)
+            })
+            
             .background(
                 backgroundBlack
             )
