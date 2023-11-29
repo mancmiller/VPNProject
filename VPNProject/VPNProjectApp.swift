@@ -12,9 +12,15 @@ struct VPNProjectApp: App {
     
     @StateObject var serverListViewModel: ServerListViewModel = ServerListViewModel()
     
+    @AppStorage("isOnboarding") var isOnboarding: Bool = true
+    
     var body: some Scene {
         WindowGroup {
-            MainView()
+            if isOnboarding {
+                OnboardingView()
+            } else {
+                MainView()
+            }
         }
         .environmentObject(serverListViewModel)
     }

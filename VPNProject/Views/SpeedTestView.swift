@@ -35,30 +35,26 @@ struct SpeedTestView: View {
                     
                     Spacer()
                     
-                    HStack {
-                        Button {
-                            inProgress.toggle()
-                            
-                        } label: {
-                            if !inProgress {
-                                Text("Start Test")
-                                    .font(.custom("Dubai-Regular", size: 14))
-                                    .foregroundStyle(.white)
-                                    .background(
-                                        Capsule()
-                                            .fill(Color("OrangePremium"))
-                                            .frame(width: 90, height: 36)
-                                    )
-                            } else {
-                                Text("In Progress")
-                                    .font(.custom("Dubai-Regular", size: 14))
-                                    .foregroundStyle(.white)
-                                    .background(
-                                        Capsule()
-                                            .fill(.gray)
-                                            .frame(width: 90, height: 36)
-                                    )
-                            }
+                    Button {
+                        inProgress.toggle()
+                        
+                    } label: {
+                        if !inProgress {
+                            Text("Start Test")
+                                .font(.custom("Dubai-Regular", size: 14))
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 8)
+                                .background(Color("OrangePremium"))
+                                .clipShape(Capsule())
+                        } else {
+                            Text("In Progress")
+                                .font(.custom("Dubai-Regular", size: 14))
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 8)
+                                .background(.gray)
+                                .clipShape(Capsule())
                         }
                     }
                 }
