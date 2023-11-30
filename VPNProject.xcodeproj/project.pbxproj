@@ -18,6 +18,9 @@
 		0477FA0A2B027B1800BAF5C4 /* Dubai-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0477FA062B027B1800BAF5C4 /* Dubai-Bold.ttf */; };
 		047F77E62B0757DF0090BEE0 /* ServerListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047F77E52B0757DF0090BEE0 /* ServerListViewModel.swift */; };
 		0497EAE02B15D77300B7BA41 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497EADF2B15D77300B7BA41 /* OnboardingView.swift */; };
+		04BEB0022B1882C1005D0A72 /* IndicatorOuterCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BEB0012B1882C1005D0A72 /* IndicatorOuterCircle.swift */; };
+		04BEB0042B1883C0005D0A72 /* ChevronView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BEB0032B1883C0005D0A72 /* ChevronView.swift */; };
+		04BEB0062B1884A4005D0A72 /* SheetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BEB0052B1884A4005D0A72 /* SheetBackground.swift */; };
 		04BFD0D32B0F602100BC185B /* ConnectionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFD0D22B0F602100BC185B /* ConnectionInfoView.swift */; };
 		04D70C1B2B061E7500C8DC9D /* ServerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D70C1A2B061E7500C8DC9D /* ServerListView.swift */; };
 		04D70C1E2B06202D00C8DC9D /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D70C1D2B06202D00C8DC9D /* Server.swift */; };
@@ -39,6 +42,9 @@
 		0477FA0B2B027B7000BAF5C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		047F77E52B0757DF0090BEE0 /* ServerListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerListViewModel.swift; sourceTree = "<group>"; };
 		0497EADF2B15D77300B7BA41 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		04BEB0012B1882C1005D0A72 /* IndicatorOuterCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorOuterCircle.swift; sourceTree = "<group>"; };
+		04BEB0032B1883C0005D0A72 /* ChevronView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChevronView.swift; sourceTree = "<group>"; };
+		04BEB0052B1884A4005D0A72 /* SheetBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetBackground.swift; sourceTree = "<group>"; };
 		04BFD0D22B0F602100BC185B /* ConnectionInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionInfoView.swift; sourceTree = "<group>"; };
 		04D70C1A2B061E7500C8DC9D /* ServerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerListView.swift; sourceTree = "<group>"; };
 		04D70C1D2B06202D00C8DC9D /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
@@ -107,6 +113,16 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		04BEB0002B188292005D0A72 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				04BEB0012B1882C1005D0A72 /* IndicatorOuterCircle.swift */,
+				04BEB0032B1883C0005D0A72 /* ChevronView.swift */,
+				04BEB0052B1884A4005D0A72 /* SheetBackground.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
 		04D70C1C2B06201500C8DC9D /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +142,7 @@
 		04F987332B0B3E5A00D5B2CB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				04BEB0002B188292005D0A72 /* Custom */,
 				0477F9E32B023D2000BAF5C4 /* MainView.swift */,
 				04D70C1A2B061E7500C8DC9D /* ServerListView.swift */,
 				04F987342B0B3E8800D5B2CB /* PremiumPurchaseView.swift */,
@@ -215,8 +232,11 @@
 				0477F9E42B023D2000BAF5C4 /* MainView.swift in Sources */,
 				04BFD0D32B0F602100BC185B /* ConnectionInfoView.swift in Sources */,
 				0497EAE02B15D77300B7BA41 /* OnboardingView.swift in Sources */,
+				04BEB0042B1883C0005D0A72 /* ChevronView.swift in Sources */,
 				04F987352B0B3E8800D5B2CB /* PremiumPurchaseView.swift in Sources */,
 				0477F9E22B023D2000BAF5C4 /* VPNProjectApp.swift in Sources */,
+				04BEB0062B1884A4005D0A72 /* SheetBackground.swift in Sources */,
+				04BEB0022B1882C1005D0A72 /* IndicatorOuterCircle.swift in Sources */,
 				047F77E62B0757DF0090BEE0 /* ServerListViewModel.swift in Sources */,
 				04D70C1E2B06202D00C8DC9D /* Server.swift in Sources */,
 				04D70C1B2B061E7500C8DC9D /* ServerListView.swift in Sources */,

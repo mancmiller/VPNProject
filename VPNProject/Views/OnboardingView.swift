@@ -89,14 +89,13 @@ extension OnboardingView {
                         .background(Color("OrangePremium"))
                         .clipShape(Capsule())
                 }
-                
-                Button {
-                    
-                } label: {
+               
                     Text("Terms of Use & Privacy Policy")
                         .font(.custom("Dubai-Regular", size: 18))
                         .foregroundStyle(.white).opacity(0.4)
-                }
+                        .onTapGesture {
+                            
+                        }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -146,13 +145,12 @@ extension OnboardingView {
                             .clipShape(Capsule())
                     }
                     
-                    Button {
-                        
-                    } label: {
                         Text("Terms of Use & Privacy Policy")
                             .font(.custom("Dubai-Regular", size: 18))
                             .foregroundStyle(.white).opacity(0.4)
-                    }
+                            .onTapGesture {
+                                
+                            }
                 }
             }
         }
