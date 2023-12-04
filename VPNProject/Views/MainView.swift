@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     
+    @State var isRotating = 0.0
     @State var isConnected = false
     @State var autoMode = false
     @State var showServerList = false
@@ -17,6 +18,9 @@ struct MainView: View {
     @State var openMenu = false
     @State var openConnectionInfo = false
     @State var startSpeedTest = false
+    
+    @State var timePassed = 0
+    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @EnvironmentObject var serverListViewModel: ServerListViewModel
     
@@ -66,9 +70,39 @@ struct MainView: View {
                     .font(.custom("Dubai-Medium", size: 16))
                     .foregroundStyle(.white)
                 
+                if isConnected {
+//                    HStack {
+//                        Image("Loading1")
+//                            .rotationEffect(.degrees(isRotating))
+//                            .onAppear {
+//                                withAnimation(.linear(duration: 3)
+//                                    .repeatForever(autoreverses: false)
+//                                ) {
+//                                    isRotating = 360
+//                                }
+//                            }
+//                        Text("Connected")
+//                            .font(.custom("Dubai-Medium", size: 18))
+//                            .foregroundStyle(.gray)
+//                    }
+                }
                 Text(isConnected ? "Connected" : "Not Connected")
                     .font(.custom("Dubai-Medium", size: 18))
                     .foregroundStyle(.gray)
+                
+                if isConnected {
+                    Text(convertTimeToString(timeInSeconds:timePassed))
+                        .font(.custom("Dubai-Medium", size: 26))
+                        .foregroundStyle(.white)
+                        .onReceive(timer) { _ in
+                            timePassed += 1
+                        }
+                } else {
+                    Spacer()
+                        .onReceive(timer) { _ in
+                            timePassed = 0
+                        }
+                }
                 
                 // Indicators and TurnOnButton
                 HStack(spacing: 25){
@@ -97,8 +131,7 @@ struct MainView: View {
                     .frame(width: 170, height: 75)
                     .onTapGesture {
                         withAnimation {
-                            isConnected.toggle()
-                        }
+                            isConnected.toggle()                        }
                     }
                     
                     
@@ -327,8 +360,8 @@ struct MainView: View {
         )
     }
     
-    // MARK: - func
-    func showLogo() -> AttributedString {
+    // MARK: - Methods
+    private func showLogo() -> AttributedString {
         var string = AttributedString("StriderVPN")
         if let range = string.range(of: "Strider") {
             string[range].font = .custom("Dubai-Bold", size: 24)
@@ -339,6 +372,14 @@ struct MainView: View {
             string[range].foregroundColor = .white
         }
         return string
+    }
+    
+    private func convertTimeToString(timeInSeconds: Int) -> String {
+        let hours = timeInSeconds / 3600
+        let minutes = timeInSeconds / 60 % 60
+        let seconds = timeInSeconds % 60
+        return String(format: "%02i:%02i:%02i",
+                      hours,minutes,seconds)
     }
 }
 

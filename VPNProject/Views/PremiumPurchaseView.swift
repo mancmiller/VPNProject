@@ -10,6 +10,7 @@ import SwiftUI
 struct PremiumPurchaseView: View {
     
     @Environment(\.dismiss) var dismissScreen
+    @State private var webViewIsPresented = false
     
     private let padding = CGFloat(16)
     
@@ -131,9 +132,18 @@ struct PremiumPurchaseView: View {
                 .background(Color("OrangePremium"))
                 .clipShape(Capsule())
             
-            Text("Terms of Use & Privacy Policy")
-                .font(.custom("Dubai-Regular", size: 18))
-                .foregroundStyle(.white).opacity(0.4)
+            Button {
+                webViewIsPresented = true
+            } label: {
+                Text("Terms of Use & Privacy Policy")
+                    .font(.custom("Dubai-Regular", size: 18))
+                    .foregroundStyle(.white).opacity(0.4)
+            }
+            .fullScreenCover(isPresented: $webViewIsPresented) {
+                SafariWebView(url: URL(string: "https://easypdfgenerator.com/terms-and-conditions")!)
+                                .ignoresSafeArea()
+            }
+                
         }
         .scrollIndicators(.hidden)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)

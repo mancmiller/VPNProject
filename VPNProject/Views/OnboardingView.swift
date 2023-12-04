@@ -16,7 +16,7 @@ struct OnboardingView: View {
     @State var perks: [Perk] = [
         Perk(image: "Layers", text: "Servers", description: "Our servers have high stability and high throughput"),
         Perk(image: "Send", text: "Locations", description: "We support more than 10 locations around the world"),
-        Perk(image: "Basketball", text: "Shortcust", description: "Set VPN to turn on automatically when certain apps are opened"),
+        Perk(image: "Basketball", text: "Shortcuts", description: "Set VPN to turn on automatically when certain apps are opened"),
         Perk(image: "Heartbeat", text: "Statistics", description: "Measure speed and view network data directly from the app")
     ]
     
