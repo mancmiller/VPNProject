@@ -20,6 +20,9 @@ struct OnboardingView: View {
         Perk(image: "Heartbeat", text: "Statistics", description: "Measure speed and view network data directly from the app")
     ]
     
+    @State private var webViewIsPresented = false
+    
+    
     var body: some View {
         ZStack {
             switch onboardingState {
@@ -89,13 +92,17 @@ extension OnboardingView {
                         .background(Color("OrangePremium"))
                         .clipShape(Capsule())
                 }
-               
-                    Text("Terms of Use & Privacy Policy")
-                        .font(.custom("Dubai-Regular", size: 18))
-                        .foregroundStyle(.white).opacity(0.4)
-                        .onTapGesture {
-                            
-                        }
+                
+                Text("Terms of Use & Privacy Policy")
+                    .font(.custom("Dubai-Regular", size: 18))
+                    .foregroundStyle(.white).opacity(0.4)
+                    .onTapGesture {
+                        webViewIsPresented.toggle()
+                    }
+                    .fullScreenCover(isPresented: $webViewIsPresented) {
+                        SafariWebView(url: URL(string: "https://easypdfgenerator.com/terms-and-conditions")!)
+                            .ignoresSafeArea()
+                    }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -145,12 +152,12 @@ extension OnboardingView {
                             .clipShape(Capsule())
                     }
                     
-                        Text("Terms of Use & Privacy Policy")
-                            .font(.custom("Dubai-Regular", size: 18))
-                            .foregroundStyle(.white).opacity(0.4)
-                            .onTapGesture {
-                                
-                            }
+                    Text("Terms of Use & Privacy Policy")
+                        .font(.custom("Dubai-Regular", size: 18))
+                        .foregroundStyle(.white).opacity(0.4)
+                        .onTapGesture {
+                            
+                        }
                 }
             }
         }

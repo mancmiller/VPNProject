@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     
-    @State var isRotating = 0.0
+//    @State var isRotating = 0.0
     @State var isConnected = false
     @State var autoMode = false
     @State var showServerList = false
@@ -18,11 +18,10 @@ struct MainView: View {
     @State var openMenu = false
     @State var openConnectionInfo = false
     @State var startSpeedTest = false
+//    @ObservedObject var currentServer: Server
     
     @State var timePassed = 0
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
-    @EnvironmentObject var serverListViewModel: ServerListViewModel
     
     
     private let backgroundBlack = Color(.black.opacity(0.3))
@@ -70,7 +69,7 @@ struct MainView: View {
                     .font(.custom("Dubai-Medium", size: 16))
                     .foregroundStyle(.white)
                 
-                if isConnected {
+//                if isConnected {
 //                    HStack {
 //                        Image("Loading1")
 //                            .rotationEffect(.degrees(isRotating))
@@ -85,7 +84,7 @@ struct MainView: View {
 //                            .font(.custom("Dubai-Medium", size: 18))
 //                            .foregroundStyle(.gray)
 //                    }
-                }
+//                }
                 Text(isConnected ? "Connected" : "Not Connected")
                     .font(.custom("Dubai-Medium", size: 18))
                     .foregroundStyle(.gray)
@@ -97,6 +96,8 @@ struct MainView: View {
                         .onReceive(timer) { _ in
                             timePassed += 1
                         }
+                        .padding(.top, -26)
+                        .padding(.bottom, -8)
                 } else {
                     Spacer()
                         .onReceive(timer) { _ in
@@ -131,7 +132,8 @@ struct MainView: View {
                     .frame(width: 170, height: 75)
                     .onTapGesture {
                         withAnimation {
-                            isConnected.toggle()                        }
+                            isConnected.toggle()
+                        }
                     }
                     
                     
@@ -385,5 +387,4 @@ struct MainView: View {
 
 #Preview {
     MainView()
-        .environmentObject(ServerListViewModel())
 }

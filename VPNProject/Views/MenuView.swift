@@ -9,6 +9,10 @@ import SwiftUI
 
 
 struct MenuView: View {
+    
+    @State var showPremiumPurchase = false
+    @State private var webViewIsPresented = false
+    
     var body: some View {
         ZStack {
             SheetBackground()
@@ -19,6 +23,12 @@ struct MenuView: View {
                             
                         } label: {
                             ButtonView(image: "Coupon2", label: "Get Premium", description: "Try all the possibilities")
+                                .onTapGesture {
+                                    showPremiumPurchase.toggle()
+                                }
+                                .fullScreenCover(isPresented: $showPremiumPurchase, content: {
+                                    PremiumPurchaseView()
+                                })
                         }
                         ButtonView(image: "Cart", label: "Restore Purchases", description: nil)
                     }
@@ -32,7 +42,21 @@ struct MenuView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         SupportView(image: "Mail", text: "Restore Purchases")
                         SupportView(image: "Shield", text: "Privacy Policy")
+                            .onTapGesture {
+                                webViewIsPresented.toggle()
+                            }
+                            .fullScreenCover(isPresented: $webViewIsPresented) {
+                                SafariWebView(url: URL(string: "https://easypdfgenerator.com/terms-and-conditions")!)
+                                    .ignoresSafeArea()
+                            }
                         SupportView(image: "Document", text: "Terms of Use")
+                            .onTapGesture {
+                                webViewIsPresented.toggle()
+                            }
+                            .fullScreenCover(isPresented: $webViewIsPresented) {
+                                SafariWebView(url: URL(string: "https://easypdfgenerator.com/terms-and-conditions")!)
+                                    .ignoresSafeArea()
+                            }
                     }
                     .listRowBackground(Color.clear)
                 } header: {
@@ -55,12 +79,12 @@ struct SupportView: View {
     let text: String
     
     var body: some View {
-            HStack {
-                Image(image)
-                    .frame(width: 42, height: 42)
-                Text(text)
-                    .font(.custom("Dubai-Light", size: 18))
-                    .foregroundStyle(.white)
+        HStack {
+            Image(image)
+                .frame(width: 42, height: 42)
+            Text(text)
+                .font(.custom("Dubai-Light", size: 18))
+                .foregroundStyle(.white)
         }
     }
 }
@@ -72,31 +96,31 @@ struct ButtonView: View {
     let description: String?
     
     var body: some View {
-            HStack {
-                Image(image)
-                    .frame(width: 42, height: 42)
-                
-                VStack(alignment: .leading) {
-                    Text(label)
-                        .font(.custom("Dubai-Regular", size: 16))
-                        .foregroundStyle(.white)
-                    if let description = description {
-                        Text(description)
-                            .font(.custom("Dubai-Light", size: 14))
-                            .foregroundStyle(.white.opacity(0.7))
-                    }
+        HStack {
+            Image(image)
+                .frame(width: 42, height: 42)
+            
+            VStack(alignment: .leading) {
+                Text(label)
+                    .font(.custom("Dubai-Regular", size: 16))
+                    .foregroundStyle(.white)
+                if let description = description {
+                    Text(description)
+                        .font(.custom("Dubai-Light", size: 14))
+                        .foregroundStyle(.white.opacity(0.7))
                 }
-                .padding(.leading, 8)
-                
-                Spacer()
-                
-                ChevronView(color: .white, forwardOrBackward: "forward")
             }
-            // inside padding
             .padding(.leading, 8)
-            .padding(.trailing, 24)
-            .padding(.vertical, 8)
-            .background(.white.opacity(0.05))
+            
+            Spacer()
+            
+            ChevronView(color: .white, forwardOrBackward: "forward")
+        }
+        // inside padding
+        .padding(.leading, 8)
+        .padding(.trailing, 24)
+        .padding(.vertical, 8)
+        .background(.white.opacity(0.05))
         .clipShape(RoundedRectangle(cornerRadius: 24))
     }
 }

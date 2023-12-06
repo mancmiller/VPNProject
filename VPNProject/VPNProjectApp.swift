@@ -10,8 +10,6 @@ import SwiftUI
 @main
 struct VPNProjectApp: App {
     
-    @StateObject var serverListViewModel: ServerListViewModel = ServerListViewModel()
-    
     @AppStorage("isOnboarding") var isOnboarding: Bool = true
     
     var body: some Scene {
@@ -22,6 +20,5 @@ struct VPNProjectApp: App {
                 MainView()
             }
         }
-        .environmentObject(serverListViewModel)
     }
 }

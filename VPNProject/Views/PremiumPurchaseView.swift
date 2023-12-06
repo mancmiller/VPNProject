@@ -98,7 +98,7 @@ struct PremiumPurchaseView: View {
 //                                    .font(.custom("Dubai-Light", size: 18))
 //                                    .foregroundStyle(.white).opacity(0.7)
 //                            } else if priceButton.time == "1 month" {
-                                
+//                                
 //                                Text("₸ " + String(ceil(priceButton.sum * 100) / 100.0) + " / month")
 //                                    .font(.custom("Dubai-Light", size: 18))
 //                                    .foregroundStyle(.white).opacity(0.7)
@@ -132,18 +132,16 @@ struct PremiumPurchaseView: View {
                 .background(Color("OrangePremium"))
                 .clipShape(Capsule())
             
-            Button {
-                webViewIsPresented = true
-            } label: {
-                Text("Terms of Use & Privacy Policy")
-                    .font(.custom("Dubai-Regular", size: 18))
-                    .foregroundStyle(.white).opacity(0.4)
-            }
-            .fullScreenCover(isPresented: $webViewIsPresented) {
-                SafariWebView(url: URL(string: "https://easypdfgenerator.com/terms-and-conditions")!)
-                                .ignoresSafeArea()
-            }
-                
+            Text("Terms of Use & Privacy Policy")
+                .font(.custom("Dubai-Regular", size: 18))
+                .foregroundStyle(.white).opacity(0.4)
+                .onTapGesture {
+                    webViewIsPresented.toggle()
+                }
+                .fullScreenCover(isPresented: $webViewIsPresented) {
+                    SafariWebView(url: URL(string: "https://easypdfgenerator.com/terms-and-conditions")!)
+                        .ignoresSafeArea()
+                }
         }
         .scrollIndicators(.hidden)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
