@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     
+//    @State var isRotating = 0.0
     @State var isConnected = false
     @State var autoMode = false
     @State var showServerList = false
@@ -18,7 +19,8 @@ struct MainView: View {
     @State var openConnectionInfo = false
     @State var startSpeedTest = false
     
-    @EnvironmentObject var serverListViewModel: ServerListViewModel
+    @State var timePassed = 0
+    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     
     private let backgroundBlack = Color(.black.opacity(0.3))
@@ -26,37 +28,39 @@ struct MainView: View {
     
     var body: some View {
         
-        VStack {
+        ScrollView {
             // MARK: - Header
             HStack {
                 Text(showLogo())
                 
                 Spacer()
                 
-                Button {
-                    openMenu.toggle()
-                } label: {
-                    Image("MenuButton")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .background(
-                            Circle()
-                                .fill(
-                                    .shadow(.inner(color: .black.opacity(0.6),
-                                                   radius: 1, x: 4, y: 4))
-                                )
-                                .fill(
-                                    .shadow(.inner(color: .white.opacity(0.6),
-                                                   radius: 2, x: -1, y: -1))
-                                )
-                        ).foregroundStyle(.black.opacity(0.4))
-                }
-                .sheet(isPresented: $openMenu, content: {
-                    MenuView()
-                        .presentationDetents([.medium])
-                        .presentationDragIndicator(.visible)
-                })
-            }.padding(padding)
+                Image("MenuButton")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .background(
+                        Circle()
+                            .fill(
+                                .shadow(.inner(color: .black.opacity(0.6),
+                                               radius: 1, x: 4, y: 4))
+                            )
+                            .fill(
+                                .shadow(.inner(color: .white.opacity(0.6),
+                                               radius: 2, x: -1, y: -1))
+                            )
+                    ).foregroundStyle(.black.opacity(0.4))
+                
+                    .onTapGesture {
+                        openMenu.toggle()
+                    }
+                    .sheet(isPresented: $openMenu, content: {
+                        MenuView()
+                            .presentationDetents([.medium])
+                            .presentationDragIndicator(.visible)
+                    })
+                
+            }
+            .frame(maxHeight: 40)
             
             // MARK: - TurnOnButton Section
             VStack {
@@ -64,9 +68,41 @@ struct MainView: View {
                     .font(.custom("Dubai-Medium", size: 16))
                     .foregroundStyle(.white)
                 
+//                if isConnected {
+//                    HStack {
+//                        Image("Loading1")
+//                            .rotationEffect(.degrees(isRotating))
+//                            .onAppear {
+//                                withAnimation(.linear(duration: 3)
+//                                    .repeatForever(autoreverses: false)
+//                                ) {
+//                                    isRotating = 360
+//                                }
+//                            }
+//                        Text("Connected")
+//                            .font(.custom("Dubai-Medium", size: 18))
+//                            .foregroundStyle(.gray)
+//                    }
+//                }
                 Text(isConnected ? "Connected" : "Not Connected")
                     .font(.custom("Dubai-Medium", size: 18))
                     .foregroundStyle(.gray)
+                
+                if isConnected {
+                    Text(convertTimeToString(timeInSeconds:timePassed))
+                        .font(.custom("Dubai-Medium", size: 26))
+                        .foregroundStyle(.white)
+                        .onReceive(timer) { _ in
+                            timePassed += 1
+                        }
+                        .padding(.top, -26)
+                        .padding(.bottom, -8)
+                } else {
+                    Spacer()
+                        .onReceive(timer) { _ in
+                            timePassed = 0
+                        }
+                }
                 
                 // Indicators and TurnOnButton
                 HStack(spacing: 25){
@@ -79,29 +115,26 @@ struct MainView: View {
                     }
                     
                     // TurnOnButton
-                    Button {
-                        //TODO action
-                    } label: {
-                        ZStack(alignment: Alignment(horizontal: !isConnected ? .leading : .trailing, vertical: .center)) {
-                            Capsule()
-                                .fill(Color.black.opacity(0.3))
-                            Capsule()
-                                .fill(.shadow(.inner(color: Color("AccentColor").opacity(0.4),
-                                                     radius: 2, x: -4, y: -4))
-                                )
-                                .foregroundStyle(.black.opacity(0.4))
-                                .padding(.vertical, 10)
-                                .padding(.horizontal, 14)
-                            
-                            Image("Toggle")
-                        }
-                        .frame(width: 170, height: 75)
-                        .onTapGesture {
-                            withAnimation {
-                                isConnected.toggle()
-                            }
+                    ZStack(alignment: Alignment(horizontal: !isConnected ? .leading : .trailing, vertical: .center)) {
+                        Capsule()
+                            .fill(Color.black.opacity(0.3))
+                        Capsule()
+                            .fill(.shadow(.inner(color: Color("AccentColor").opacity(0.4),
+                                                 radius: 2, x: -4, y: -4))
+                            )
+                            .foregroundStyle(.black.opacity(0.4))
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 14)
+                        
+                        Image("Toggle")
+                    }
+                    .frame(width: 170, height: 75)
+                    .onTapGesture {
+                        withAnimation {
+                            isConnected.toggle()
                         }
                     }
+                    
                     
                     // Indicator ON
                     ZStack {
@@ -113,157 +146,30 @@ struct MainView: View {
                 }
             }
             // View around TurnOnButton and Indicators
-            .frame(maxWidth: .infinity, maxHeight: 200)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, padding)
             .background(
                 backgroundBlack
                     .clipShape(RoundedRectangle(cornerRadius: 24))
             )
-            // TurnOnButton and Indicators HStack paddings
-            .padding(.horizontal, padding)
-            .padding(.bottom, padding)
+            // TurnOnButton and Indicators HStack padding
+            .padding(.top, padding)
             
             // MARK: - Location and Shorctut Buttons
             HStack {
                 // Location Button
-                Button {
-                    showServerList.toggle()
-                } label: {
-                    HStack {
-                        Image("Germany")
-                            .frame(width: 42, height: 42)
-                            .clipShape(Circle())
-                        
-                        VStack(alignment: .leading) {
-                            Text("Location")
-                                .font(.custom("Dubai-Light", size: 14))
-                                .foregroundStyle(.gray)
-                            Text("Germany")
-                                .font(.custom("Dubai-Regular", size: 16))
-                                .foregroundStyle(.white)
-                        }
-                        .padding(.leading, 8)
-                        
-                        Spacer()
-                        
-                        ChevronView(color: .black, forwardOrBackward: "forward")
-                    }
-                    .sheet(isPresented: $showServerList, content: {
-                        ServerListView()
-                            .presentationDetents([.medium])
-                            .presentationDragIndicator(.visible)
-                    })
-                    
-                    // Location Button paddings
-                    .padding(.leading, 12)
-                    .padding(.trailing, 24)
-                    .padding(.vertical, 18)
-                    .background(
-                        backgroundBlack
-                            .clipShape(RoundedRectangle(cornerRadius: 24))
-                    )
-                }
-                
-                // Shotcut Button
-                Button {
-                    autoMode.toggle()
-                } label: {
-                    HStack {
-                        // Indicator
-                        ZStack {
-                            IndicatorOuterCircle()
-                            Circle()
-                                .fill( autoMode ? Color("OrangePremium") : Color("DarkAccentColor"))
-                                .frame(width: 8, height: 8)
-                        }
-                        
-                        VStack(alignment: .leading) {
-                            Text("Shortcut")
-                                .font(.custom("Dubai-Light", size: 14))
-                                .foregroundStyle(.white)
-                            Text("Auto Mode")
-                                .font(.custom("Dubai-Regular", size: 16))
-                                .foregroundStyle(.white)
-                        }
-                    }
-                    // Shortcut Button paddings
-                    .padding(.vertical, 18)
-                    .padding(.horizontal, 12)
-                    .background(
-                        backgroundBlack
-                            .clipShape(RoundedRectangle(cornerRadius: 24))
-                    )
-                    .overlay(
-                        autoMode ? RoundedRectangle(cornerRadius: 24)
-                            .stroke(Color("OrangePremium")) : nil
-                    )
-                }
-            }
-            // Location and Shortcut Button HStack paddings
-            .padding(.horizontal, padding)
-            .padding(.vertical, padding)
-            
-            // MARK: - GetPremiumButton
-            if !isPremium {
-                Button {
-                    showPremiumPurchase.toggle()
-                } label: {
-                    HStack {
-                        Image("Coupon")
-                            .frame(width: 42, height: 42)
-                        
-                        VStack(alignment: .leading, spacing: -2) {
-                            Text("Get Premium")
-                                .font(.custom("Dubai-Medium", size: 20))
-                                .foregroundStyle(.white)
-                            Text("• secure your data while surfing")
-                                .font(.custom("Dubai-Light", size: 14))
-                                .foregroundStyle(.white)
-                            Text("• change the country without leaving home")
-                                .font(.custom("Dubai-Light", size: 14))
-                                .lineLimit(1)
-                                .foregroundStyle(.white)
-                            
-                        }
-                        .padding(.leading, 12)
-                        
-                        Spacer()
-                        
-                        ChevronView(color: .white, forwardOrBackward: "forward")
-                    }
-                    // GetPremiumButton inside padding
-                    .padding(.leading, 12)
-                    .padding(.trailing, 24)
-                    .padding(.vertical, 4)
-                    .background(
-                        Color(Color("OrangePremium"))
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 24))
-                }
-                .fullScreenCover(isPresented: $showPremiumPurchase, content: {
-                    PremiumPurchaseView()
-                })
-                
-                // GetPremiumButton HStack padding
-                .padding(.horizontal, padding)
-                .padding(.top, padding)
-                .padding(.bottom, padding / 2)
-            }
-            
-            // MARK: - SpeedTestButton
-            Button {
-                startSpeedTest.toggle()
-            } label: {
                 HStack {
-                    Image("Rocket")
+                    Image("Germany")
                         .frame(width: 42, height: 42)
-                        
+                        .clipShape(Circle())
+                    
                     VStack(alignment: .leading) {
-                        Text("Speed Test")
+                        Text("Location")
+                            .font(.custom("Dubai-Light", size: 14))
+                            .foregroundStyle(.gray)
+                        Text("Germany")
                             .font(.custom("Dubai-Regular", size: 16))
                             .foregroundStyle(.white)
-                        Text("Check your internet connection speed")
-                            .font(.custom("Dubai-Light", size: 14))
-                            .foregroundStyle(.white.opacity(0.7))
                     }
                     .padding(.leading, 8)
                     
@@ -271,49 +177,165 @@ struct MainView: View {
                     
                     ChevronView(color: .black, forwardOrBackward: "forward")
                 }
-                // SpeedTestButton inside padding
-                .padding(.leading, 8)
+                .sheet(isPresented: $showServerList, content: {
+                    ServerListView()
+                        .presentationDetents([.medium])
+                        .presentationDragIndicator(.visible)
+                })
+                
+                // Location Button paddings
+                .padding(.leading, 12)
                 .padding(.trailing, 24)
                 .padding(.vertical, 18)
                 .background(
                     backgroundBlack
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                )
+                .onTapGesture {
+                    showServerList.toggle()
+                }
+                
+                // Shotcut Button
+                HStack {
+                    // Indicator
+                    ZStack {
+                        IndicatorOuterCircle()
+                        Circle()
+                            .fill( autoMode ? Color("OrangePremium") : Color("DarkAccentColor"))
+                            .frame(width: 8, height: 8)
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        Text("Shortcut")
+                            .font(.custom("Dubai-Light", size: 14))
+                            .foregroundStyle(.white)
+                        Text("Auto Mode")
+                            .font(.custom("Dubai-Regular", size: 16))
+                            .foregroundStyle(.white)
+                    }
+                }
+                // Shortcut Button paddings
+                .padding(.vertical, 18)
+                .padding(.horizontal, 12)
+                .background(
+                    backgroundBlack
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                )
+                .overlay(
+                    autoMode ? RoundedRectangle(cornerRadius: 24)
+                        .stroke(Color("OrangePremium")) : nil
+                )
+                .onTapGesture {
+                    autoMode.toggle()
+                }
+            }
+            // Location and Shortcut Button HStack padding
+            .padding(.vertical, padding * 2)
+            
+            // MARK: - GetPremiumButton
+            if !isPremium {
+                HStack {
+                    Image("Coupon")
+                        .frame(width: 42, height: 42)
+                    
+                    VStack(alignment: .leading, spacing: -2) {
+                        Text("Get Premium")
+                            .font(.custom("Dubai-Medium", size: 20))
+                            .foregroundStyle(.white)
+                        Text("• secure your data while surfing")
+                            .font(.custom("Dubai-Light", size: 14))
+                            .foregroundStyle(.white)
+                        Text("• change the country without leaving home")
+                            .font(.custom("Dubai-Light", size: 14))
+                            .lineLimit(1)
+                            .foregroundStyle(.white)
+                        
+                    }
+                    .padding(.leading, 12)
+                    
+                    Spacer()
+                    
+                    ChevronView(color: .white, forwardOrBackward: "forward")
+                }
+                // GetPremiumButton inside padding
+                .padding(.leading, 12)
+                .padding(.trailing, 24)
+                .padding(.vertical, 4)
+                .background(
+                    Color(Color("OrangePremium"))
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 24))
+                .onTapGesture {
+                    showPremiumPurchase.toggle()
+                }
+                .padding(.bottom, padding)
+                
+                .fullScreenCover(isPresented: $showPremiumPurchase, content: {
+                    PremiumPurchaseView()
+                })
+            }
+            
+            // MARK: - SpeedTestButton
+            HStack {
+                Image("Rocket")
+                    .frame(width: 42, height: 42)
+                
+                VStack(alignment: .leading) {
+                    Text("Speed Test")
+                        .font(.custom("Dubai-Regular", size: 16))
+                        .foregroundStyle(.white)
+                    Text("Check your internet connection speed")
+                        .font(.custom("Dubai-Light", size: 14))
+                        .foregroundStyle(.white.opacity(0.7))
+                }
+                .padding(.leading, 8)
+                
+                Spacer()
+                
+                ChevronView(color: .black, forwardOrBackward: "forward")
+            }
+            // SpeedTestButton inside padding
+            .padding(.leading, 8)
+            .padding(.trailing, 24)
+            .padding(.vertical, 18)
+            .background(
+                backgroundBlack
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 24))
+            .onTapGesture {
+                startSpeedTest.toggle()
             }
             .sheet(isPresented: $startSpeedTest, content: {
                 SpeedTestView()
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
             })
-            .padding(.horizontal, padding)
-            .padding(.vertical, padding / 2)
             
             // MARK: - ConnectionInfoButton
-            Button {
-                openConnectionInfo.toggle()
-            } label: {
-                HStack {
-                    Image("Info")
-                        .frame(width: 42, height: 42)
-                        
-                    VStack(alignment: .leading) {
-                        Text("Connection")
-                            .font(.custom("Dubai-Regular", size: 16))
-                            .foregroundStyle(.white)
-                        Text("Get information about your connection")
-                            .font(.custom("Dubai-Light", size: 14))
-                            .foregroundStyle(.white.opacity(0.7))
-                    }
-                    .padding(.leading, 8)
-                    
-                    Spacer()
-                    
-                    ChevronView(color: .black, forwardOrBackward: "forward")
+            HStack {
+                Image("Info")
+                    .frame(width: 42, height: 42)
+                
+                VStack(alignment: .leading) {
+                    Text("Connection")
+                        .font(.custom("Dubai-Regular", size: 16))
+                        .foregroundStyle(.white)
+                    Text("Get information about your connection")
+                        .font(.custom("Dubai-Light", size: 14))
+                        .foregroundStyle(.white.opacity(0.7))
                 }
-                // ConnectionInfoButton inside padding
                 .padding(.leading, 8)
-                .padding(.trailing, 24)
-                .padding(.vertical, 18)
+                
+                Spacer()
+                
+                ChevronView(color: .black, forwardOrBackward: "forward")
+            }
+            // ConnectionInfoButton inside padding
+            .padding(.leading, 8)
+            .padding(.trailing, 24)
+            .padding(.vertical, 18)
+            .onTapGesture {
+                openConnectionInfo.toggle()
             }
             .sheet(isPresented: $openConnectionInfo, content: {
                 ConnectionInfoView()
@@ -325,10 +347,11 @@ struct MainView: View {
                 backgroundBlack
             )
             .clipShape(RoundedRectangle(cornerRadius: 24))
-            .padding(.horizontal, padding)
-            .padding(.vertical, padding / 2)
+            .padding(.vertical, padding)
         }
+        .scrollIndicators(.hidden)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .padding(.horizontal, padding)
         
         // MARK: Background Image
         .background(
@@ -338,8 +361,8 @@ struct MainView: View {
         )
     }
     
-    // MARK: - func
-    func showLogo() -> AttributedString {
+    // MARK: - Methods
+    private func showLogo() -> AttributedString {
         var string = AttributedString("StriderVPN")
         if let range = string.range(of: "Strider") {
             string[range].font = .custom("Dubai-Bold", size: 24)
@@ -351,40 +374,16 @@ struct MainView: View {
         }
         return string
     }
+    
+    private func convertTimeToString(timeInSeconds: Int) -> String {
+        let hours = timeInSeconds / 3600
+        let minutes = timeInSeconds / 60 % 60
+        let seconds = timeInSeconds % 60
+        return String(format: "%02i:%02i:%02i",
+                      hours,minutes,seconds)
+    }
 }
 
 #Preview {
     MainView()
-        .environmentObject(ServerListViewModel())
-}
-
-struct IndicatorOuterCircle: View {
-    var body: some View {
-        Circle()
-            .fill(.shadow(.inner(color: .black.opacity(0.2),
-                                 radius: 4, x: 4, y: 4))
-            )
-            .fill(.shadow(.inner(color: Color("AccentColor"),
-                                 radius: 4, x: -1, y: -1))
-            )
-            .foregroundStyle(.black.opacity(0.4))
-            .frame(width: 20, height: 20)
-    }
-}
-
-struct ChevronView: View {
-    
-    let color: Color
-    let forwardOrBackward: String
-    
-    var body: some View {
-        Image(systemName: "chevron.\(forwardOrBackward)")
-            .font(.system(size: 12, weight: .black))
-            .foregroundStyle(.white)
-            .background(
-                Circle()
-                    .fill(color.opacity(0.2))
-                    .frame(width: 24, height: 24)
-            )
-    }
 }

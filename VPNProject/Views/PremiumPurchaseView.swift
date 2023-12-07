@@ -10,6 +10,7 @@ import SwiftUI
 struct PremiumPurchaseView: View {
     
     @Environment(\.dismiss) var dismissScreen
+    @State private var webViewIsPresented = false
     
     private let padding = CGFloat(16)
     
@@ -27,15 +28,14 @@ struct PremiumPurchaseView: View {
     ]
     
     var body: some View {
-        VStack(spacing: padding * 2) {
+        ScrollView {
             
             // MARK: - Back Button and Label HStack
             HStack {
-                Button {
-                    dismissScreen()
-                } label: {
                     ChevronView(color: .white, forwardOrBackward: "backward")
-                }
+                    .onTapGesture {
+                        dismissScreen()
+                    }
                 
                 Spacer()
                 
@@ -49,7 +49,7 @@ struct PremiumPurchaseView: View {
             .padding(.horizontal, padding)
             
             // MARK: - Perks VStack
-            VStack(spacing: padding / 2) {
+            VStack {
                 ForEach(perks) { perk in
                     HStack(spacing: 16) {
                         Image(perk.image)
@@ -65,13 +65,14 @@ struct PremiumPurchaseView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 24))
                 }
             }
+            .padding(.top, padding * 2)
             
             // MARK: - PriceButtions VStack
-            VStack(spacing: padding / 2) {
+            VStack {
                 ForEach(priceButtons) { priceButton in
-                    Button {
-                        priceButton.isSelected.toggle()
-                    } label: {
+//                    Button {
+//                        priceButton.isSelected.toggle()
+//                    } label: {
                         HStack(spacing: padding) {
                             !priceButton.isSelected ? Image(systemName: "circle")
                                 .resizable()
@@ -92,33 +93,32 @@ struct PremiumPurchaseView: View {
                             
                             Spacer()
                             
-                            if priceButton.time == "1 year" {
-                                Text("₸ " + String(ceil(priceButton.sum / 12 * 10)/10.0) + " / month")
-                                    .font(.custom("Dubai-Light", size: 18))
-                                    .foregroundStyle(.white).opacity(0.7)
-                            } else if priceButton.time == "1 month" {
-                                
-                                Text("₸ " + String(ceil(priceButton.sum * 100) / 100.0) + " / month")
-                                    .font(.custom("Dubai-Light", size: 18))
-                                    .foregroundStyle(.white).opacity(0.7)
-                            } else {
-                                Text("₸ " + String(priceButton.sum * 4) + " / month")
-                                    .font(.custom("Dubai-Light", size: 18))
-                                    .foregroundStyle(.white).opacity(0.7)
-                            }
+//                            if priceButton.time == "1 year" {
+//                                Text("₸ " + String(ceil(priceButton.sum / 12 * 10)/10.0) + " / month")
+//                                    .font(.custom("Dubai-Light", size: 18))
+//                                    .foregroundStyle(.white).opacity(0.7)
+//                            } else if priceButton.time == "1 month" {
+//                                
+//                                Text("₸ " + String(ceil(priceButton.sum * 100) / 100.0) + " / month")
+//                                    .font(.custom("Dubai-Light", size: 18))
+//                                    .foregroundStyle(.white).opacity(0.7)
+//                            } else {
+//                                Text("₸ " + String(priceButton.sum * 4) + " / month")
+//                                    .font(.custom("Dubai-Light", size: 18))
+//                                    .foregroundStyle(.white).opacity(0.7)
+//                            }
                         }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 6)
                         .background( priceButton.isSelected ? Color("AccentColor") : .black.opacity(0.5))
                         .clipShape(Capsule())
-                    }
+
+//                    }
                 }
             }
+            .padding(.vertical, padding )
             
             // MARK: - Proceed Button
-            Button {
-                
-            } label: {
                 HStack(alignment: .center) {
                     Text("3 days,")
                         .font(.custom("Dubai-Medium", size: 22))
@@ -131,12 +131,19 @@ struct PremiumPurchaseView: View {
                 .frame(maxWidth: .infinity)
                 .background(Color("OrangePremium"))
                 .clipShape(Capsule())
-            }
             
             Text("Terms of Use & Privacy Policy")
                 .font(.custom("Dubai-Regular", size: 18))
                 .foregroundStyle(.white).opacity(0.4)
+                .onTapGesture {
+                    webViewIsPresented.toggle()
+                }
+                .fullScreenCover(isPresented: $webViewIsPresented) {
+                    SafariWebView(url: URL(string: "https://easypdfgenerator.com/terms-and-conditions")!)
+                        .ignoresSafeArea()
+                }
         }
+        .scrollIndicators(.hidden)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding(.horizontal, padding)
         .background(

@@ -16,9 +16,12 @@ struct OnboardingView: View {
     @State var perks: [Perk] = [
         Perk(image: "Layers", text: "Servers", description: "Our servers have high stability and high throughput"),
         Perk(image: "Send", text: "Locations", description: "We support more than 10 locations around the world"),
-        Perk(image: "Basketball", text: "Shortcust", description: "Set VPN to turn on automatically when certain apps are opened"),
+        Perk(image: "Basketball", text: "Shortcuts", description: "Set VPN to turn on automatically when certain apps are opened"),
         Perk(image: "Heartbeat", text: "Statistics", description: "Measure speed and view network data directly from the app")
     ]
+    
+    @State private var webViewIsPresented = false
+    
     
     var body: some View {
         ZStack {
@@ -90,13 +93,16 @@ extension OnboardingView {
                         .clipShape(Capsule())
                 }
                 
-                Button {
-                    
-                } label: {
-                    Text("Terms of Use & Privacy Policy")
-                        .font(.custom("Dubai-Regular", size: 18))
-                        .foregroundStyle(.white).opacity(0.4)
-                }
+                Text("Terms of Use & Privacy Policy")
+                    .font(.custom("Dubai-Regular", size: 18))
+                    .foregroundStyle(.white).opacity(0.4)
+                    .onTapGesture {
+                        webViewIsPresented.toggle()
+                    }
+                    .fullScreenCover(isPresented: $webViewIsPresented) {
+                        SafariWebView(url: URL(string: "https://easypdfgenerator.com/terms-and-conditions")!)
+                            .ignoresSafeArea()
+                    }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -146,13 +152,12 @@ extension OnboardingView {
                             .clipShape(Capsule())
                     }
                     
-                    Button {
-                        
-                    } label: {
-                        Text("Terms of Use & Privacy Policy")
-                            .font(.custom("Dubai-Regular", size: 18))
-                            .foregroundStyle(.white).opacity(0.4)
-                    }
+                    Text("Terms of Use & Privacy Policy")
+                        .font(.custom("Dubai-Regular", size: 18))
+                        .foregroundStyle(.white).opacity(0.4)
+                        .onTapGesture {
+                            
+                        }
                 }
             }
         }
