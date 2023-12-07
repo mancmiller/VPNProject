@@ -18,7 +18,6 @@ struct MainView: View {
     @State var openMenu = false
     @State var openConnectionInfo = false
     @State var startSpeedTest = false
-//    @ObservedObject var currentServer: Server
     
     @State var timePassed = 0
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()

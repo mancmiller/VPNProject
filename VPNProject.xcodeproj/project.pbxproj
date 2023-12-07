@@ -24,6 +24,7 @@
 		04BFD0D32B0F602100BC185B /* ConnectionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFD0D22B0F602100BC185B /* ConnectionInfoView.swift */; };
 		04D70C1B2B061E7500C8DC9D /* ServerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D70C1A2B061E7500C8DC9D /* ServerListView.swift */; };
 		04D70C1E2B06202D00C8DC9D /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D70C1D2B06202D00C8DC9D /* Server.swift */; };
+		04DF34C72B21B78A006655D0 /* IPInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DF34C62B21B78A006655D0 /* IPInfoAPI.swift */; };
 		04E4C1352B109545007F5976 /* SpeedTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E4C1342B109545007F5976 /* SpeedTestView.swift */; };
 		04F987352B0B3E8800D5B2CB /* PremiumPurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F987342B0B3E8800D5B2CB /* PremiumPurchaseView.swift */; };
 /* End PBXBuildFile section */
@@ -48,6 +49,7 @@
 		04BFD0D22B0F602100BC185B /* ConnectionInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionInfoView.swift; sourceTree = "<group>"; };
 		04D70C1A2B061E7500C8DC9D /* ServerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerListView.swift; sourceTree = "<group>"; };
 		04D70C1D2B06202D00C8DC9D /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		04DF34C62B21B78A006655D0 /* IPInfoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPInfoAPI.swift; sourceTree = "<group>"; };
 		04E4C1342B109545007F5976 /* SpeedTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedTestView.swift; sourceTree = "<group>"; };
 		04F987342B0B3E8800D5B2CB /* PremiumPurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumPurchaseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,6 +84,7 @@
 		0477F9E02B023D2000BAF5C4 /* VPNProject */ = {
 			isa = PBXGroup;
 			children = (
+				04DF34C52B21B76B006655D0 /* API */,
 				04F987332B0B3E5A00D5B2CB /* Views */,
 				04D70C1C2B06201500C8DC9D /* Model */,
 				0477F9E12B023D2000BAF5C4 /* VPNProjectApp.swift */,
@@ -129,6 +132,14 @@
 				04D70C1D2B06202D00C8DC9D /* Server.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		04DF34C52B21B76B006655D0 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				04DF34C62B21B78A006655D0 /* IPInfoAPI.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		04F987332B0B3E5A00D5B2CB /* Views */ = {
@@ -224,6 +235,7 @@
 				0477F9E42B023D2000BAF5C4 /* MainView.swift in Sources */,
 				04BFD0D32B0F602100BC185B /* ConnectionInfoView.swift in Sources */,
 				0497EAE02B15D77300B7BA41 /* OnboardingView.swift in Sources */,
+				04DF34C72B21B78A006655D0 /* IPInfoAPI.swift in Sources */,
 				04BEB0042B1883C0005D0A72 /* ChevronView.swift in Sources */,
 				04F987352B0B3E8800D5B2CB /* PremiumPurchaseView.swift in Sources */,
 				0477F9E22B023D2000BAF5C4 /* VPNProjectApp.swift in Sources */,
