@@ -22,6 +22,8 @@
 		04BEB0042B1883C0005D0A72 /* ChevronView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BEB0032B1883C0005D0A72 /* ChevronView.swift */; };
 		04BEB0062B1884A4005D0A72 /* SheetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BEB0052B1884A4005D0A72 /* SheetBackground.swift */; };
 		04BFD0D32B0F602100BC185B /* ConnectionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFD0D22B0F602100BC185B /* ConnectionInfoView.swift */; };
+		04D5E6B02B247AC800EF4A29 /* SpeedcheckerReportSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 04D5E6AF2B247AC800EF4A29 /* SpeedcheckerReportSDK */; };
+		04D5E6B22B247AC800EF4A29 /* SpeedcheckerSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 04D5E6B12B247AC800EF4A29 /* SpeedcheckerSDK */; };
 		04D70C1B2B061E7500C8DC9D /* ServerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D70C1A2B061E7500C8DC9D /* ServerListView.swift */; };
 		04D70C1E2B06202D00C8DC9D /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D70C1D2B06202D00C8DC9D /* Server.swift */; };
 		04DF34C72B21B78A006655D0 /* IPInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DF34C62B21B78A006655D0 /* IPInfoAPI.swift */; };
@@ -59,6 +61,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04D5E6B02B247AC800EF4A29 /* SpeedcheckerReportSDK in Frameworks */,
+				04D5E6B22B247AC800EF4A29 /* SpeedcheckerSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +177,10 @@
 			dependencies = (
 			);
 			name = VPNProject;
+			packageProductDependencies = (
+				04D5E6AF2B247AC800EF4A29 /* SpeedcheckerReportSDK */,
+				04D5E6B12B247AC800EF4A29 /* SpeedcheckerSDK */,
+			);
 			productName = VPNProject;
 			productReference = 0477F9DE2B023D2000BAF5C4 /* VPNProject.app */;
 			productType = "com.apple.product-type.application";
@@ -201,6 +209,9 @@
 				Base,
 			);
 			mainGroup = 0477F9D52B023D1F00BAF5C4;
+			packageReferences = (
+				04D5E6AE2B247AC800EF4A29 /* XCRemoteSwiftPackageReference "speedchecker-sdk-ios" */,
+			);
 			productRefGroup = 0477F9DF2B023D2000BAF5C4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -382,6 +393,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPNProject/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App needs to access your location to run the speed test";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -412,6 +424,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPNProject/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App needs to access your location to run the speed test";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -452,6 +465,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		04D5E6AE2B247AC800EF4A29 /* XCRemoteSwiftPackageReference "speedchecker-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/speedchecker/speedchecker-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.13;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		04D5E6AF2B247AC800EF4A29 /* SpeedcheckerReportSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D5E6AE2B247AC800EF4A29 /* XCRemoteSwiftPackageReference "speedchecker-sdk-ios" */;
+			productName = SpeedcheckerReportSDK;
+		};
+		04D5E6B12B247AC800EF4A29 /* SpeedcheckerSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D5E6AE2B247AC800EF4A29 /* XCRemoteSwiftPackageReference "speedchecker-sdk-ios" */;
+			productName = SpeedcheckerSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0477F9D62B023D1F00BAF5C4 /* Project object */;
 }
