@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "speedchecker-sdk-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/speedchecker/speedchecker-sdk-ios",
+      "state" : {
+        "revision" : "b9a1e7ca5265902e1c033470a9785471a2cba468",
+        "version" : "1.8.13"
+      }
+    }
+  ],
+  "version" : 2
+}
